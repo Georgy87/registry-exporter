@@ -82,7 +82,7 @@ configurations.all {
 configure<LiquibaseExtension> {
     activities.register("main") {
         arguments = mapOf(
-            "changelogFile" to "offline/src/main/resources/changelog.yml",
+            "changelogFile" to "offline/src/main/resources/db/changelog/changelog-master.yaml",
             "url" to "jdbc:postgresql://localhost:5432/MyProjectDB",
             "username" to (System.getenv("DB_USERNAME") ?: "postgres"),
             "password" to (System.getenv("DB_PASSWORD") ?: "changeme")

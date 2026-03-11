@@ -45,9 +45,56 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **`scheduler/ReportScheduler`** — `@Scheduled(fixedRate=50000)` запускает `OperationReportService`; вызов сейчас закомментирован
 - **`configuration/`** — `EntryServiceIdsConfiguration` (карта стратегий), `JpaAuditingConfiguration`
 
-### База данных
+### База данных и Liquibase-миграции
 
-PostgreSQL на `localhost:5432/MyProjectDB` (пользователь: `postgres`). Схема управляется через Liquibase; файлы миграций: `offline/src/main/resources/liquibase/schema/` и `liquibase/data/`. В `changelog.yml` все changeset-ы закомментированы — раскомментировать для применения.
+PostgreSQL на `localhost:5432/MyProjectDB` (пользователь: `postgres`).
+
+#### Структура миграций
+
+```
+offline/src/main/resources/db/changelog/
+  changelog-master.yaml          ← прод: только schema + справочные data
+  v1.0/
+    schema/
+      01-create-bank.yaml
+      02-create-transfer.yaml
+    data/
+      01-insert-banks.sql        ← только обязательные справочники
+    testdata/
+      01-insert-test-transfers.sql  ← только для тестов, в прод не идут
+  v1.1/
+    schema/
+      01-alter-bank-add-inn.yaml
+    data/
+      01-update-banks-inn.sql    ← данные, нужные для этого конкретного ALTER
+
+offline/src/test/resources/db/changelog/
+  changelog-test.yaml            ← include changelog-master + testdata
+```
+
+#### Правила
+
+- `changelog-master.yaml` — только `include`-директивы, никакой логики; **никогда не редактируется задним числом**, только дописывается
+- Каждый файл — одна логическая единица (одна таблица или одно изменение)
+- Нумерация `01-`, `02-`, ... внутри папки определяет порядок применения
+- `data/` — только обязательные справочные данные (банки, валюты, роли)
+- `testdata/` — тестовые данные; подключаются только через `changelog-test.yaml`
+- Новая версия (`v1.1/`, `v1.2/`) — для ALTER и изменений существующей схемы
+
+#### Как добавить новую миграцию
+
+1. Создать файл: `db/changelog/vX.Y/schema/NN-описание.yaml`
+2. Добавить `include` в `changelog-master.yaml`
+3. Применить: `./gradlew :offline:update`
+
+#### Тестовое окружение
+
+В `application.yml` для тестов указывать:
+```yaml
+spring:
+  liquibase:
+    change-log: classpath:db/changelog/changelog-test.yaml
+```
 
 ### Добавление нового платёжного потока
 
