@@ -1,0 +1,80 @@
+databaseChangeLog:
+#  - include:
+#      file: liquibase/schema/create-transfer-table.yaml
+#      relativeToChangelogFile: true
+
+#  - include:
+#      file: liquibase/schema/create-bank-table.yaml
+#      relativeToChangelogFile: true
+
+#  - include:
+#      file: liquibase/schema/create-entry-table.yaml
+#      relativeToChangelogFile: true
+
+#  - changeSet:
+#      id: insert-banks
+#      author: georgy
+#      changes:
+#        - sqlFile:
+#            path: liquibase/data/insert-banks.sql
+#            relativeToChangelogFile: true
+
+#  - changeSet:
+#      id: insert-transfers
+#      author: georgy
+#      changes:
+#        - sqlFile:
+#            path: liquibase/data/insert-transfers.sql
+#            relativeToChangelogFile: true
+
+#  - changeSet:
+#      id: insert-entries
+#      author: georgy
+#      changes:
+#        - sqlFile:
+#            path: liquibase/data/insert-entries.sql
+#            relativeToChangelogFile: true
+
+#  - include:
+#      file: liquibase/schema/add-transfer-originator-receiver.yaml
+#      relativeToChangelogFile: true
+
+#  - include:
+#      file: liquibase/schema/add-transfer-originator-receiver.yaml
+#      relativeToChangelogFile: true
+
+#  - changeSet:
+#      id: update-transfer-bank-refs
+#      author: georgy
+#      changes:
+#        - sqlFile:
+#            path: liquibase/data/update-transfers.sql
+#            relativeToChangelogFile: true
+#
+#  - include:
+#      file: liquibase/schema/rename-participant-to-bank.yaml
+#      relativeToChangelogFile: true
+
+# наш новый файл — добавляем колонку inn, заполняем и ставим ограничения
+#  - include:
+#      file: liquibase/schema/alter-bank-add-inn.yaml
+
+#  - include:
+#      file: liquibase/schema/create-transfer-flow-table.yaml
+#      relativeToChangelogFile: true
+
+#  - changeSet:
+#      id: insert-transfer-flow
+#      author: georgy
+#      changes:
+#        - sqlFile:
+#            path: liquibase/data/insert-transfer-flow.sql
+#            relativeToChangelogFile: true
+
+#  - include:
+#      file: liquibase/schema/create-balance-history-table.yaml
+#      relativeToChangelogFile: true
+
+#  - include:
+#      file: liquibase/schema/create-balance-table.yaml
+#      relativeToChangelogFile: true

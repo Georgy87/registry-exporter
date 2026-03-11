@@ -1,0 +1,36 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-bank-sequence
+      author: georgy
+      changes:
+        - createSequence:
+            sequenceName: bank_seq
+            startValue: 1
+            incrementBy: 1
+
+  - changeSet:
+      id: create-bank-table
+      author: georgy
+      changes:
+        - createTable:
+            tableName: bank
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(50)
+
+  - changeSet:
+      id: set-bank-sequence-default
+      author: georgy
+      changes:
+        - addDefaultValue:
+            columnName: id
+            tableName: bank
+            defaultValueComputed: "nextval('bank_seq')"
+

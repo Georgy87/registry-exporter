@@ -1,0 +1,35 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-transfer-table
+      author: georgy
+      changes:
+        - createTable:
+            tableName: transfer
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: originator_reference_number
+                  type: VARCHAR(255)
+
+              - column:
+                  name: platform_reference_number
+                  type: VARCHAR(255)
+
+              - column:
+                  name: transfer_date
+                  type: TIMESTAMP WITH TIME ZONE
+
+              - column:
+                  name: transfer_state
+                  type: VARCHAR(50)
+
+              - column:
+                  name: settelment_date
+                  type: DATE

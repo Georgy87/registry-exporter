@@ -1,0 +1,64 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-balance-history-sequence
+      author: georgy
+      changes:
+        - createSequence:
+            sequenceName: seq_participant_balance_history
+            startValue: 1
+            incrementBy: 1
+  - changeSet:
+      id: create-balance-history-table
+      author: georgy
+      changes:
+        - createTable:
+            tableName: t_participant_balance_history
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  defaultValueSequenceNext: seq_participant_balance_history
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: participant_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: settlement_participant_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: operation_type
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: transfer_id
+                  type: BIGINT
+              - column:
+                  name: amount
+                  type: NUMERIC(19,2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: currency
+                  type: VARCHAR(3)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: time
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: true
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: comment
+                  type: VARCHAR(255)

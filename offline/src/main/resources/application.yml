@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/MyProjectDB
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:changeme}
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/changelog-master.yaml
+  jpa:
+    #    hibernate:
+    #      ddl-auto: update  # Создает таблицы, если их нет
+    show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+#  logging:
+#    level:
+#      org.hibernate.SQL: DEBUG
+#      org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+server:
+  port: 8082

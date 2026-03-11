@@ -1,0 +1,53 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-balance-sequence
+      author: georgy
+      changes:
+        - createSequence:
+            sequenceName: seq_participant_balance
+            startValue: 1
+            incrementBy: 1
+  - changeSet:
+      id: create-balance-table
+      author: georgy
+      changes:
+        - createTable:
+            tableName: t_participant_balance
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  defaultValueSequenceNext: seq_participant_balance
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: participant_id
+                  type: BIGINT
+              - column:
+                  name: settlement_participant_id
+                  type: BIGINT
+              - column:
+                  name: currency
+                  type: VARCHAR(3)
+              - column:
+                  name: online_balance
+                  type: NUMERIC
+              - column:
+                  name: minimum_balance
+                  type: NUMERIC
+              - column:
+                  name: participant_balance_history_id
+                  type: BIGINT
+                  constraints:
+                    nullable: true
+                    foreignKeyName: fk_participant_balance_history
+                    references: t_participant_balance_history(id)
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
